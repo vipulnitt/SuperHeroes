@@ -3,8 +3,10 @@ package com.example.superheroes;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -38,7 +42,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         //bind the data
         Picasso.get().load(data.get(position).getImages().getSm()).into(holder.imageView);
-        holder.name.setText(data.get(position).getName()+"\nGender:"+data.get(position).getApperance().getGender());
+        holder.name.setText("ID:"+data.get(position).getId()+"\n"+data.get(position).getName()+"\nGender:"+data.get(position).getApperance().getGender());
       holder.view.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

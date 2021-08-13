@@ -8,19 +8,24 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.superheroes.MyHandler.MyDbHandler;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity {
     ImageView imageView;
     TextView textView;
     Button share,favourite;
+    int t=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,15 @@ public class MainActivity2 extends AppCompatActivity {
                 shareImage();
             }
         });
+        MyDbHandler db1 = new MyDbHandler(MainActivity2.this);
+        List<Data> alldata = db1.getalldata();
+        for(int i=0;i< alldata.size();i++)
+        {
+            if(alldata.get(i).getId()==intent.getIntExtra("id",0))
+            {
+                favourite.setText("Added");
+            }
+        }
        favourite.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -68,6 +82,11 @@ public class MainActivity2 extends AppCompatActivity {
                data.setImages(img);
                data.setAppearance(appearance);
                data.setPowerstats(powerstats);
+               favourite.setText("Added");
+               if(t==1)
+               {
+                   Toast.makeText(MainActivity2.this, "Already Added to favourite", Toast.LENGTH_SHORT).show();
+               }
                db.addFav(data);
            }
        });
